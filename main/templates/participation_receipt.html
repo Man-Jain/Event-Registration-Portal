@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+      <center><h1>Participation Receipt</h1></center>
+
+  <div class="row">
+    <div class="card col-md-12">
+  <h3 class="card-header">Student Copy</h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ info.event.name }}</h5>
+    <h5 class="card-title">{{ info.user.first_name }} {{ info.user.last_name }}</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Amount Paid :- {{ info.event.price }}</li>
+  </ul>
+  <div class="card-footer text-muted">
+    Date :- 12/05/2018
+  </div>
+</div>
+  </div>
+    <div class="row">
+    <div class="card col-md-12">
+  <h3 class="card-header">Teacher Copy</h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ info.event.name }}</h5>
+    <h5 class="card-title">{{ info.user.first_name }} {{ info.user.last_name }}</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Amount Paid :- {{ info.event.price }}</li>
+  </ul>
+  <div class="card-footer text-muted">
+    Date :- 12/05/2018
+  </div>
+</div>
+  </div>
+    <div class="row">
+    <div class="card col-md-12">
+  <h3 class="card-header">Management Copy</h3>
+  <div class="card-body">
+    <h5 class="card-title">{{ info.event.name }}</h5>
+    <h5 class="card-title">{{ info.user.first_name }} {{ info.user.last_name }}</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Amount Paid :- {{ info.event.price }}</li>
+  </ul>
+  <div class="card-footer text-muted">
+    Date :- 12/05/2018
+  </div>
+</div>
+  </div>
+<center><input class="btn btn-primary" type="button" value="Print Receipt" onClick="window.print()"></center>
+</div>
+
+{% endblock %}

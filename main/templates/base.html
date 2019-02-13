@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Renaissance Portal</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">RenPortal</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+      </li>
+      {% if request.user.groups.all.0.name == 'coordinator' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'event_details' %}">Event Details</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'user_dashboard' %}">All Events</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'student_participated' %}">Participated Events</a>
+      </li>
+      {% endif %}
+    </ul>
+    {% if user.is_authenticated %}
+    <div class="form-inline my-2 my-lg-0">
+      <a href="/accounts/logout" class="btn btn-secondary my-2 my-sm-0">Logout</a>
+    </div>
+    {% else %}
+    <div class="form-inline my-2 my-lg-0">
+      <a href="/accounts/login" class="btn btn-secondary my-2 my-sm-0">Login</a>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+
+{%  block content %}{% endblock %}
+
+<div class="jumbotron">
+  <h1 class="display-3">Footer</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script></body>
+</html>

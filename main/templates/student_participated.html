@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1 class="display-3">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div>
+<br>
+<div class="container">
+	<div class="row">
+		{% for event_info in participated_events %}
+    <br>
+      <div class="card border-primary col-md-4 mb-3" style="margin-left:5px; max-width: 20rem;">
+  <div class="card-header">{{ event_info.event.name }}</div>
+  <div class="card-body">
+    <h4 class="card-title">Info card title</h4>
+    <p class="card-text">Event Status :- {{ event_info.payment_status }}</p>
+    <center><a href="{% url 'get_receipt' event_info.id %}" class="btn btn-warning">See Receipt</a></center>
+  </div>
+</div>
+    {% endfor %}
+	</div>
+</div>
+
+{% endblock %}
