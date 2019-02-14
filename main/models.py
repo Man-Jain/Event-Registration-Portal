@@ -23,4 +23,4 @@ class ParticipatedEvent(models.Model):
 	approval_date = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return '''{} and {}'''.format(self.user.first_name, self.event.name)
+		return '''{} and {} on {}'''.format(self.user.first_name, self.event.name, self.approval_date)

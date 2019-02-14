@@ -1,3 +1,4 @@
+psycopg2==2.7.4
 backcall==0.1.0
 beautifulsoup4==4.6.0
 bleach==3.1.0
@@ -70,4 +71,4 @@ whitenoise==4.1.2
 widgetsnbextension==3.4.2
 Willow==1.1
 xlrd==1.2.0
-psycopg2==2.7.2
+
