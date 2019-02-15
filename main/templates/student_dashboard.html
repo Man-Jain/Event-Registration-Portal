@@ -3,13 +3,9 @@
 {% block content %}
 
 <div class="jumbotron">
-  <h1 class="display-3">Hello, world!</h1>
-  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <h1 class="center display-3">Our Events</h1>
+  <p class="lead">Here is a list of events of Renaissance.</p>
   <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </p>
 </div>
 <br>
 
@@ -18,7 +14,7 @@
 		{% for event in events %}
       <div class="col-md-4">
       <div class="card mb-3">
-  <h3 class="card-header">Splash</h3>
+  <h3 class="card-header">{{ event.name }}</h3>
   <div class="card-body">
     <h5 class="card-title">{{ event.name }}</h5>
     <h6 class="card-subtitle text-muted">Support card subtitle</h6>
@@ -29,7 +25,7 @@
   </div>
   <div class="card-body">
     {% if event in user_events %}
-    <a href="#" class="btn btn-success card-link disabled">Participate Now</a>
+    <a href="#" class="btn btn-success card-link disabled">Already Participated</a>
     {% else %}
     <a href="{% url 'register_event' event.id %}" class="btn btn-success card-link">Participate Now</a>
     {% endif %}

@@ -25,7 +25,7 @@ SECRET_KEY = 'llf!)f$t(wk8s8c8^zmi&mmumn^7e_*ol)=p89=2t70fabkzx^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com','localhost']
 
 # Application definition
 
@@ -76,7 +76,6 @@ WSGI_APPLICATION = 'renportal.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=500)
-
 }
 
 
@@ -122,7 +121,7 @@ STATICFILES_DIRS = (
 )
 LOGIN_URL = '/accounts/login/'
 LOGOUT_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'dindex'
 LOGOUT_URL = '/accounts/login/'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
