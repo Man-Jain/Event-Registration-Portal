@@ -8,7 +8,10 @@
             {% csrf_token %}
   <fieldset>
     {{ form.as_p }}
-    <center><button type="submit" class="btn btn-primary">Login</button></center>
+
+    <center>
+      <p><a href="{% url 'register' %}">Register</a></p>
+      <button type="submit" class="btn btn-primary">Login</button></center>
   </fieldset>
 </form>
       </div>

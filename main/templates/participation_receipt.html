@@ -3,63 +3,88 @@
 {% block content %}
 
 <div class="container">
+  <br><br>
       <center><h1>Participation Receipt</h1></center>
-
+      <br><br>
+      {% if info.payment_status == 'N' %}
+        <div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4 class="alert-heading">Warning!</h4>
+  <p class="mb-0">Please take a print out of this receipt to one of the coordinators to pay the fee and get approved.</p>
+</div>
+{% else %}
+<div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Well done!</strong> You successfully registered.
+</div>
+      {% endif %}
   <div class="row">
     <div class="card col-md-12">
   <h3 class="card-header">Student Copy</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ info.event.name }}</h5>
-    <h5 class="card-title">{{ info.user.first_name }} {{ info.user.last_name }}</h5>
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h5 class="card-title">Event Name :- {{ info.event.name }}</h5>
+    <h5 class="card-title">Student Name :- {{ info.user.user.first_name }}</h5>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Amount Paid :- {{ info.event.price }}</li>
   </ul>
   <div class="card-footer text-muted">
-    Date :- 12/05/2018
+    {% if info.payment_status == 'N' %}
+    Status :- Pending for Fee Payment
+        {% else %}
+        <p>Approved On :- {{info.approval_date}}</p>
+        <p>Approved By :- {{ info.approvar.user.first_name }} </p>
+      {% endif %}
+
   </div>
 </div>
   </div>
+  <br>
     <div class="row">
     <div class="card col-md-12">
   <h3 class="card-header">Teacher Copy</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ info.event.name }}</h5>
-    <h5 class="card-title">{{ info.user.first_name }} {{ info.user.last_name }}</h5>
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h5 class="card-title">Event Name :- {{ info.event.name }}</h5>
+    <h5 class="card-title">Student Name :- {{ info.user.user.first_name }}</h5>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Amount Paid :- {{ info.event.price }}</li>
   </ul>
   <div class="card-footer text-muted">
-    Date :- 12/05/2018
+    {% if info.payment_status == 'N' %}
+    Status :- Pending for Fee Payment
+        {% else %}
+        <p>Approved On :- {{info.approval_date}}</p>
+        <p>Approved By :- {{info.approvar.user.first_name}} </p>
+      {% endif %}
   </div>
 </div>
   </div>
+  <br>
     <div class="row">
     <div class="card col-md-12">
   <h3 class="card-header">Management Copy</h3>
   <div class="card-body">
-    <h5 class="card-title">{{ info.event.name }}</h5>
-    <h5 class="card-title">{{ info.user.first_name }} {{ info.user.last_name }}</h5>
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <h5 class="card-title">Event Name :- {{ info.event.name }}</h5>
+    <h5 class="card-title">Student Name :- {{ info.user.user.first_name }}</h5>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Amount Paid :- {{ info.event.price }}</li>
   </ul>
   <div class="card-footer text-muted">
-    Date :- 12/05/2018
+    {% if info.payment_status == 'N' %}
+    Status :- Pending for Fee Payment
+        {% else %}
+        <p>Approved On :- {{info.approval_date}}</p>
+        <p>Approved By :- {{ info.approvar.user.first_name }} </p>
+      {% endif %}
   </div>
 </div>
   </div>
+  <br><br>
 <center><input class="btn btn-primary" type="button" value="Print Receipt" onClick="window.print()"></center>
 </div>
+
+<br><br>
 
 {% endblock %}

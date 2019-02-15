@@ -9,6 +9,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 class IndexView(TemplateView):
     template_name = "index.html"
 
+class DashboardIndex(LoginRequiredMixin, ListView):
+	model = Coordinator
+	template_name = "coordinator_index.html"
+	context_object_name = 'coordinators'
+
+	def get_queryset(self):
+		if self.request.user.groups.filter(name='coordinator').exists():
+			return Coordinator.objects.filter(associated_event=self.request.user.coordinator.associated_event)
+		return None	
+
+class StudentIndexView(LoginRequiredMixin, ListView):
+    template_name = "student_index.html"
+
 class EventListView(LoginRequiredMixin, ListView):
 	'''List of All Events'''
 	model = Event
@@ -18,7 +31,7 @@ class EventListView(LoginRequiredMixin, ListView):
 	def get_context_data(self, **kwargs):
 		user_events = []
 		context = super().get_context_data(**kwargs)
-		res = ParticipatedEvent.objects.filter(user=self.request.user)
+		res = ParticipatedEvent.objects.filter(user=self.request.user.participant)
 		for r in res:
 			user_events.append(r.event)
 		context['user_events'] = user_events
@@ -31,7 +44,7 @@ class UserParticipatedView(LoginRequiredMixin,ListView):
 	template_name = 'student_participated.html'
 
 	def get_queryset(self):
-		return ParticipatedEvent.objects.filter(user=self.request.user)
+		return ParticipatedEvent.objects.filter(user=self.request.user.participant)
 
 class EventStatusView(TemplateView):
 	'''Status of Event on User Dashboard'''
@@ -47,12 +60,12 @@ class ParticipatedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 		return self.request.user.groups.filter(name='coordinator').exists()
 
 	def get_queryset(self):
-		return ParticipatedEvent.objects.filter(event=self.request.user.member.associated_event)
+		return ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event)
 
 	def get_context_data(self, **kwargs):
 	    context = super().get_context_data(**kwargs)
 	    event_sum = 0
-	    result = ParticipatedEvent.objects.filter(event=self.request.user.member.associated_event)
+	    result = ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event)
 	    for r in result:
 	    	if r.payment_status == "Y":
 	    		event_sum = event_sum + r.event.price
@@ -66,25 +79,44 @@ class StudentParticipationStatusView(LoginRequiredMixin,UserPassesTestMixin,Temp
 	def test_func(self):
 		return self.request.user.groups.filter(name='coordinator').exists()
 
+class Register(TemplateView):
+	template_name = "registration/register.html"
+
+	def post(self, request):
+		form = request.POST
+		username = form['username']
+		name=form['name']
+		password = form['password']
+		college=form['college']
+		email=form['email']
+		number=form['number']
+		
+		user, created = User.objects.get_or_create(username=username,first_name = name, email=email)
+		if created:
+			user.set_password(password)
+			user.save()
+		p = Participant(user=user, college=college, mobile_number=number)
+		p.save()
+		return redirect('login')
+
 @login_required
 def register_event(request, event_id):
 	event = Event.objects.get(pk=event_id)
 	print(event.name)
-	e = ParticipatedEvent(user=request.user, event=event, payment_status='N')
+	e = ParticipatedEvent(user=request.user.participant, event=event, payment_status='N')
 	e.save()
-	return render(request, 'event_status.html', {'event':event, 'event_details':e})
+	return redirect('get_receipt', participation_id=e.pk)
 
 @login_required
 def approve_student(request, participation_id):
 	participation_info = ParticipatedEvent.objects.get(pk=participation_id)
 	participation_info.payment_status='Y'
+	participation_info.approver = request.user.coordinator
 	participation_info.save()
+
 	return redirect('event_details')
 
 @login_required
 def get_receipt_participation(request, participation_id):
 	participation_info = ParticipatedEvent.objects.get(pk=participation_id)
-	if participation_info.payment_status == "N":
-		return redirect('student_participated')
-	else:
-		return render(request, 'participation_receipt.html',{'info':participation_info})
+	return render(request, 'participation_receipt.html',{'info':participation_info})

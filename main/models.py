@@ -9,18 +9,27 @@ class Event(models.Model):
 	def __str__(self):
 		return self.name
 
-class Member(models.Model):
+class Coordinator(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	associated_event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True)
 
 	def __str__(self):
 		return self.user.first_name
 
-class ParticipatedEvent(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	event = models.ForeignKey(Event, on_delete=models.CASCADE)
-	payment_status = models.CharField(max_length=1,blank=False)
-	approval_date = models.DateTimeField(auto_now=True)
+class Participant(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	college = models.CharField(max_length=128)
+	mobile_number = models.CharField(max_length=128)
 
 	def __str__(self):
-		return '''{} and {} on {}'''.format(self.user.first_name, self.event.name, self.approval_date)
+		return self.user.first_name
+
+class ParticipatedEvent(models.Model):
+	user = models.ForeignKey(Participant, on_delete=models.CASCADE)
+	event = models.ForeignKey(Event, on_delete=models.CASCADE)
+	payment_status = models.CharField(max_length=1, blank=False)
+	approval_date = models.DateTimeField(auto_now=True)
+	approvar = models.ForeignKey(Coordinator, on_delete=models.CASCADE, blank=True, null=True)
+
+	def __str__(self):
+		return self.event.name

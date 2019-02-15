@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if request.user.groups.all.0.name == 'coordinator' %}
+<div class="jumbotron">
+  <h1 class="display-3">Event Coordinators List</h1>
+</div>
+<br>
+
+<div class="container">
+	<div class="row">
+	{% for coordinator in coordinators %}
+	<div class="col-md-4">
+		<div class="card mb-3">
+  <h3 class="card-header">{{ coordinator.user.first_name }}</h3>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Department :- {{ coordinator.user.first_name }}</li>
+    <li class="list-group-item">Year :- {{ coordinator.user.first_name }} 2 Year</li>
+    <li class="list-group-item">Mobile No. :- {{ coordinator.user.first_name }} 90010020011</li>
+    <li class="list-group-item">Email :- {{ coordinator.user.first_name }} student@jecrc.ac.in</li>
+  </ul>
+</div>
+	</div>
+	{% endfor %}
+</div>
+</div>
+
+<br>
+{% else %}
+<div class="jumbotron">
+  <h1 class="display-3">Renaissance 2019</h1>
+</div>
+<br>
+<div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+  <div class="card-header">Header</div>
+  <div class="card-body">
+    <h4 class="card-title">Success card title</h4>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+<div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+  <div class="card-header">Our Events</div>
+  <div class="card-body">
+    <p class="card-text">See our events and participate in them.</p>
+  </div>
+</div>
+<div class="card text-white bg-warning mb-3" style="max-width: 20rem;">
+  <div class="card-header">Participated Events</div>
+  <div class="card-body">
+    <p class="card-text">See the list of Events you have participated to.</p>
+  </div>
+</div>
+{% endif %}
+
+
+{% endblock %}
