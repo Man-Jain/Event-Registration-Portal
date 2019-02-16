@@ -17,10 +17,8 @@ class DashboardIndex(LoginRequiredMixin, ListView):
 	def get_queryset(self):
 		if self.request.user.groups.filter(name='coordinator').exists():
 			return Coordinator.objects.filter(associated_event=self.request.user.coordinator.associated_event)
-		return None	
-
-class StudentIndexView(LoginRequiredMixin, ListView):
-    template_name = "student_index.html"
+		else:
+			return None
 
 class EventListView(LoginRequiredMixin, ListView):
 	'''List of All Events'''
@@ -29,11 +27,12 @@ class EventListView(LoginRequiredMixin, ListView):
 	template_name = 'student_dashboard.html'
 
 	def get_context_data(self, **kwargs):
-		user_events = []
+		user_events = {}
 		context = super().get_context_data(**kwargs)
 		res = ParticipatedEvent.objects.filter(user=self.request.user.participant)
 		for r in res:
-			user_events.append(r.event)
+			user_events[r.event.name] = r.payment_status
+		print(user_events)
 		context['user_events'] = user_events
 		return context
 
@@ -45,10 +44,6 @@ class UserParticipatedView(LoginRequiredMixin,ListView):
 
 	def get_queryset(self):
 		return ParticipatedEvent.objects.filter(user=self.request.user.participant)
-
-class EventStatusView(TemplateView):
-	'''Status of Event on User Dashboard'''
-	template_name = 'event_status.html'
 
 class ParticipatedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 	'''List of Students Participated in Events'''
@@ -72,30 +67,60 @@ class ParticipatedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 	    context['event_sum'] = event_sum
 	    return context
 
-class StudentParticipationStatusView(LoginRequiredMixin,UserPassesTestMixin,TemplateView):
-	'''Status of Participation of Student'''
-	template_name = "student_status.html"
+	def test_func(self):
+		return self.request.user.groups.filter(name='coordinator').exists()
+
+class ApprovedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
+	'''List of Students Approved in Events'''
+	model = ParticipatedEvent
+	template_name = 'approved_students.html'
+	context_object_name = 'approved_students'
 
 	def test_func(self):
 		return self.request.user.groups.filter(name='coordinator').exists()
+
+	def get_queryset(self):
+		return ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event)
+
+	def get_context_data(self, **kwargs):
+	    context = super().get_context_data(**kwargs)
+	    event_sum = 0
+	    result = ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event)
+	    for r in result:
+	    	if r.payment_status == "Y":
+	    		event_sum = event_sum + r.event.price
+	    context['event_sum'] = event_sum
+	    return context
+
+	def test_func(self):
+		return self.request.user.groups.filter(name='coordinator').exists()
+
+class SendNotification(LoginRequiredMixin,UserPassesTestMixin,TemplateView):
+	template_name = 'send_notification.html'
+
+	def test_func(self):
+		return self.request.user.groups.filter(name='coordinator').exists()
+
+	def post(self, request):
+		form = request.POST
+		event=request.user.coordinator.associated_event
+		n = Notification(event=event,message=form['message'])
+		n.save()
+		return render(request, self.template_name,{'status': 'Y'})
 
 class Register(TemplateView):
 	template_name = "registration/register.html"
 
 	def post(self, request):
 		form = request.POST
-		username = form['username']
-		name=form['name']
-		password = form['password']
-		college=form['college']
-		email=form['email']
-		number=form['number']
 		
-		user, created = User.objects.get_or_create(username=username,first_name = name, email=email)
+		user, created = User.objects.get_or_create(username=form['username'],
+												   first_name = form['name'],email=form['email'])
 		if created:
-			user.set_password(password)
+			user.set_password(form['password'])
 			user.save()
-		p = Participant(user=user, college=college, mobile_number=number)
+		p = Participant(user=user,college=form['college'],mobile_number=form['number'],
+						roll_no=form['roll_no'],year=form['year'],branch=form['branch'])
 		p.save()
 		return redirect('login')
 
@@ -111,7 +136,7 @@ def register_event(request, event_id):
 def approve_student(request, participation_id):
 	participation_info = ParticipatedEvent.objects.get(pk=participation_id)
 	participation_info.payment_status='Y'
-	participation_info.approver = request.user.coordinator
+	participation_info.approvar = request.user.coordinator
 	participation_info.save()
 
 	return redirect('event_details')

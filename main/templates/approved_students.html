@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="background-color: #DEF2F1;color: black;font-family: courier;">
+<div class="jumbotron">
+  <h4 class="text-center display-4">Event Participation List</h4>
+</div>
+<br>
+
+<table class="table table-hover">
+        <tr>
+          <th>S No.</th>
+          <th>Registration Number</th>
+          <th>Student Name</th>
+          <th>Department</th>
+          <th>College</th>
+          <th>Email ID</th>
+          <th>Contact Number</th>
+          <th>Fee Paid</th>
+          <th>Payment Status</th>
+        </tr>
+    {% for student in approved_students %}
+        <tr>
+          <td>1</td>
+          <td>{{ student.id }}</td>
+          <td>{{ student.user.user.first_name }}</td>
+          <td>{{ student.user.branch }}</td>
+          <td>{{ student.user.college }}</td>
+          <td>{{ student.user.user.email }}</td>
+          <td>{{ student.user.mobile_number }}</td>
+          <td>{{ student.event.price }}</td>
+          <td>{{ student.payment_status }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Total Earning</td>
+      <td>{{ event_sum }}</td>
+    </tr>
+      </table>
+
+{% endblock %}
+<div class="card border-primary col-md-12" style="margin-bottom:2%;">
+  <div class="card-header">{{ student.user.first_name }}</div>
+  <div class="card-body">
+    <h4 class="card-title">Payment Status :- {{ student.payment_status }}</h4>
+    <p class="card-text">
+  </div>
+</div>
+</div>

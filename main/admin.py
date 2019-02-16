@@ -32,25 +32,6 @@ class DisplayEvent(admin.ModelAdmin):
 	list_filter = ('name', 'price')
 	actions = [export_audits_as_pdf]
 
-	def export_audits_as_pdf(self, request, queryset):
-		file_name = "audit_entries{0}.pdf".format(time.strftime("%d-%m-%Y-%H-%M-%S"))
-		response = HttpResponse(content_type='application/pdf')
-		response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)
-		data = [['Action Time', 'Priority', 'username', 'Source Address', 'Subject', 'Details']]
-		for d in queryset.all():
-			datetime_str = str(d.action_time).split('.')[0]
-			item = [datetime_str, d.priority, d.username, d.source_address, d.subject, d.details]
-			data.append(item)
-		doc = SimpleDocTemplate(response, pagesize=(21*inch, 29*inch))
-		elements = []
-		table_data = Table(data)
-		table_data.setStyle(TableStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                                    ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-                                    ("FONTSIZE",  (0, 0), (-1, -1), 13)]))
-		elements.append(table_data)
-		doc.build(elements)
-		return response
-
 class DisplayParticipatedEvent(admin.ModelAdmin):
 	list_display = ('user','event','payment_status')
 	search_fields = ['user', 'event']
@@ -65,3 +46,4 @@ admin.site.register(Event, DisplayEvent)
 admin.site.register(ParticipatedEvent, DisplayParticipatedEvent)
 admin.site.register(Coordinator, DisplayMember)
 admin.site.register(Participant)
+admin.site.register(Notification)

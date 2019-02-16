@@ -4,7 +4,7 @@
 
 {% if request.user.groups.all.0.name == 'coordinator' %}
 <div class="jumbotron">
-  <h1 class="display-3">Event Coordinators List</h1>
+  <h1 class="text-center display-4">Event Coordinators List</h1>
 </div>
 <br>
 
@@ -16,9 +16,9 @@
   <h3 class="card-header">{{ coordinator.user.first_name }}</h3>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Department :- {{ coordinator.user.first_name }}</li>
-    <li class="list-group-item">Year :- {{ coordinator.user.first_name }} 2 Year</li>
-    <li class="list-group-item">Mobile No. :- {{ coordinator.user.first_name }} 90010020011</li>
-    <li class="list-group-item">Email :- {{ coordinator.user.first_name }} student@jecrc.ac.in</li>
+    <li class="list-group-item">Year :- {{ coordinator.user.first_name }}</li>
+    <li class="list-group-item">Mobile No. :- {{ coordinator.user.first_name }}</li>
+    <li class="list-group-item">Email :- {{ coordinator.user.first_name }}</li>
   </ul>
 </div>
 	</div>
@@ -29,10 +29,10 @@
 <br>
 {% else %}
 <div class="jumbotron">
-  <h1 class="display-3">Renaissance 2019</h1>
+  <h1 class="text-center display-4">Renaissance 2019</h1>
 </div>
 <br>
-<h2  style="text-align: center;text-decoration: underline;">CORE TEAM</h2>
+<h2  style="text-align: center;">CORE TEAM</h2>
 <div style="display: inline-block;display: flex;">
 <div style="padding-left: 55px;"><img src="{% static 'img/1.jpeg' %}" style="border-radius: 50%;" height="200px;" width="200px;">
 	</div>
@@ -50,7 +50,7 @@
 <div style="padding-left: 55px;"><img src="{% static 'img/5.jpg' %}" style="border-radius: 50%;" height="200px;" width="200px;">
 	</div>			
 </div>
-<h2 style="text-align: center;text-decoration: underline;padding-top: 45px;">Events</h2>
+<h2 style="text-align: center;padding-top: 45px;">Events</h2>
 <div style="display: inline-block;display: flex;">
 <div style="padding-left: 55px;"><img src="{% static 'img/6.jpg' %}" style="border-radius: 50%;" height="200px;" width="200px;">
 	</div>

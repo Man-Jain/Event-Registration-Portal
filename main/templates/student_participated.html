@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="jumbotron">
-  <h1 class="center display-3">Participated Events</h1>
+  <h1 class="text-center display-4">Participated Events</h1>
+  <br>
   <p class="lead">Events of list you have participated in.</p>
   <hr class="my-4">
 </div>
@@ -12,12 +13,16 @@
 	<div class="row">
 		{% for event_info in participated_events %}
     <br>
-      <div class="card border-primary col-md-4 mb-3" style="margin-left:5px; max-width: 20rem;">
-  <div class="card-header">{{ event_info.event.name }}</div>
+      <div class="card border-primary col-md-4" style="">
+  <div class="card-header"><h4>{{ event_info.event.name }}</h4></div>
   <div class="card-body">
-    <h4 class="card-title">Info card title</h4>
-    <p class="card-text">Event Status :- {{ event_info.payment_status }}</p>
+    {% if event_info.payment_status == 'N' %}
+    <p class="card-text">Event Status :- Not Approved</p>
     <center><a href="{% url 'get_receipt' event_info.id %}" class="btn btn-warning">See Receipt</a></center>
+    {% else %}
+    <p class="card-text">Event Status :- Approved</p>
+    <center><a href="{% url 'get_receipt' event_info.id %}" class="btn btn-success">Approved Receipt</a></center>
+    {% endif %}
   </div>
 </div>
     {% endfor %}

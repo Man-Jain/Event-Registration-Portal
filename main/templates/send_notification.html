@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<style type="text/css">
+  body {
+    background-image: none;
+  }
+</style>
+<div class="jumbotron">
+  <h1 class="text-center display-4">Send Notification</h1>
+</div>
+ <div class="container">
+  {% if status == 'Y' %}
+    <div class="alert alert-dismissible alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  Notification Sent Successfully.
+</div>
+  {% endif %}
+      <div class="col-md-8">
+          <br>
+          <form method="POST" action="{% url 'send_notification' %}">
+            {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleInputEmail1">Message</label>
+      <input type="text" name="message" class="form-control" placeholder="Enter Name">
+    </div>
+    <center><button type="submit" class="btn btn-primary">Send Notification</button></center>
+    <br><br>
+</form>
+      </div>
+  </div>
+{% endblock %}

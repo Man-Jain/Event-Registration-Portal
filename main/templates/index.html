@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-  
-
-  <img style="height: 600px; width: 100%; display: block;" src="{% static 'img/ren.png' %}" alt="Card image">
+<style type="text/css">
+	.front-img {
+		background-repeat: no-repeat;
+background-size: cover;
+z-index: 0;
+padding: none;
+margin: none;
+-webkit-perspective: 2000px;
+min-height: 100%;
+position: relative;
+	}
+</style>
+  <div style="min-height:600px;" class="container">This is the homepage</div>
   <div class="card-body">
   </div><br><br>
   </div>
-</div>
-
 {% endblock %}
