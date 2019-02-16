@@ -3,12 +3,9 @@
 {% block content %}
 
 {% if request.user.groups.all.0.name == 'coordinator' %}
-<div class="jumbotron">
-  <h1 class="text-center display-4">Event Coordinators List</h1>
-</div>
-<br>
-
-<div class="container">
+<div style="margin-top: 2%;" class="container">
+  <h1 style="color: white;" class="text-center display-4">Event Coordinators List</h1>
+  <br><br>
 	<div class="row">
 	{% for coordinator in coordinators %}
 	<div class="col-md-4">
@@ -16,9 +13,9 @@
   <h3 class="card-header">{{ coordinator.user.first_name }}</h3>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Department :- {{ coordinator.user.first_name }}</li>
-    <li class="list-group-item">Year :- {{ coordinator.user.first_name }}</li>
-    <li class="list-group-item">Mobile No. :- {{ coordinator.user.first_name }}</li>
-    <li class="list-group-item">Email :- {{ coordinator.user.first_name }}</li>
+    <li class="list-group-item">Year :- {{ coordinator.user.year }}</li>
+    <li class="list-group-item">Mobile No. :- {{ coordinator.user.mobile_number }}</li>
+    <li class="list-group-item">Email :- {{ coordinator.user.email }}</li>
   </ul>
 </div>
 	</div>

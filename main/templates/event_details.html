@@ -1,34 +1,44 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div style="background-color: #DEF2F1;color: black;font-family: courier;">
-<div class="jumbotron">
-  <h1 class="display-4 text-center">Event Participation List</h1>
-</div>
-<br>
-
-<div class="container">
+<style type="text/css">
+  body {
+    background-image: none;
+  }
+</style>
+  <h1 class="text-center display-4">Participating Students</h1>
+  <br><br>
 	<table class="table table-hover">
         <tr>
           <th>S No.</th>
+          <th>Registration Number</th>
           <th>Student Name</th>
+          <th>Department</th>
+          <th>College</th>
+          <th>Email ID</th>
+          <th>Contact Number</th>
+          <th>Fee</th>
           <th>Payment Status</th>
           <th>Action</th>
         </tr>
     {% for student in event_students %}
         <tr>
           <td>1</td>
+          <td>{{ student.id }}</td>
           <td>{{ student.user.user.first_name }}</td>
+          <td>{{ student.user.branch }}</td>
+          <td>{{ student.user.college }}</td>
+          <td>{{ student.user.user.email }}</td>
+          <td>{{ student.user.mobile_number }}</td>
+          <td>{{ student.event.price }}</td>
           <td>{{ student.payment_status }}</td>
           {% if student.payment_status == "Y" %}
-          <td><a href="#" class="btn btn-success card-link disabled">Approve</a></td>
+          <td><a href="#" class="btn btn-info card-link disabled">Approved</a></td>
           {% else %}
           <td><a href="{% url 'approve_student' student.id %}" class="btn btn-success card-link">Approve</a></td>
           {% endif %}
         </tr>
     {% endfor %}
       </table>
-</div>
 
 {% endblock %}
 <div class="card border-primary col-md-12" style="margin-bottom:2%;">
