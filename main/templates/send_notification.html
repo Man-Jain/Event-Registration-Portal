@@ -5,16 +5,14 @@
     background-image: none;
   }
 </style>
-<div class="jumbotron">
+ <div style="margin-top: 4%;" class="container">
   <h1 class="text-center display-4">Send Notification</h1>
-</div>
- <div class="container">
   {% if status == 'Y' %}
     <div class="alert alert-dismissible alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   Notification Sent Successfully.
 </div>
-  {% endif %}
+  {% endif %}<center>
       <div class="col-md-8">
           <br>
           <form method="POST" action="{% url 'send_notification' %}">
@@ -26,6 +24,6 @@
     <center><button type="submit" class="btn btn-primary">Send Notification</button></center>
     <br><br>
 </form>
-      </div>
+      </div></center>
   </div>
 {% endblock %}

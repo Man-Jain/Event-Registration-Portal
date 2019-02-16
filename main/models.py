@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+BRANCH_CHOICES = (('Civil','Civil'),('Mechanical','Mechanical'),('ECE','ECE'),('CS','CS'),('IT','IT'),('EE','EE'),('Others','Others'))
 # Create your models here.
 class Event(models.Model):
 	name = models.CharField(max_length=128, blank=False)
@@ -15,6 +16,9 @@ class Event(models.Model):
 class Coordinator(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	associated_event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True)
+	mobile_number = models.CharField(max_length=128)
+	year = models.CharField(max_length=128,choices=(('1','1st Year'),('2','2nd Year'),('3','3rd Year'),('4','4th Year')))
+	branch = models.CharField(max_length=128,choices=BRANCH_CHOICES)
 
 	def __str__(self):
 		return self.user.first_name

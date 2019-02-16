@@ -45,6 +45,16 @@ class UserParticipatedView(LoginRequiredMixin,ListView):
 	def get_queryset(self):
 		return ParticipatedEvent.objects.filter(user=self.request.user.participant)
 
+	def get_context_data(self, **kwargs):
+	    context = super().get_context_data(**kwargs)
+	    events = ParticipatedEvent.objects.filter(user=self.request.user.participant)
+	    notification = Notification.objects.all()
+	    context['notification'] = notification
+	    return context
+
+	def test_func(self):
+		return self.request.user.groups.filter(name='coordinator').exists()
+
 class ParticipatedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 	'''List of Students Participated in Events'''
 	model = ParticipatedEvent

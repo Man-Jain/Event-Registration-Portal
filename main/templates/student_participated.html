@@ -2,14 +2,9 @@
 
 {% block content %}
 
-<div class="jumbotron">
-  <h1 class="text-center display-4">Participated Events</h1>
-  <br>
-  <p class="lead">Events of list you have participated in.</p>
-  <hr class="my-4">
-</div>
-<br>
-<div class="container">
+<div style="margin-top: 2%;" class="container">
+  <h1 style="color: white;" class="text-center display-4">Participated Events</h1>
+  <br><br>
 	<div class="row">
 		{% for event_info in participated_events %}
     <br>
@@ -23,6 +18,19 @@
     <p class="card-text">Event Status :- Approved</p>
     <center><a href="{% url 'get_receipt' event_info.id %}" class="btn btn-success">Approved Receipt</a></center>
     {% endif %}
+    <br>
+    <div class="list-group">
+
+  <a href="#" class="list-group-item list-group-item-action active">
+    Event Notifications
+  </a>
+  {% for noti in notification %}
+  {% if noti.event.name == event_info.event.name %}
+  <a href="#" class="list-group-item list-group-item-action">{{ noti.message }}
+  {% endif %}
+  {% endfor %}
+  </a>
+</div>
   </div>
 </div>
     {% endfor %}

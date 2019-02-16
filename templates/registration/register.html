@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+<style type="text/css">.navbar .nav-link {
+    display: none;
+  }</style>
  <center><div class="container">
-      <div class="col-md-8">
-          <h3 class="text-center">Register</h3>
+      <div class="col-md-6">
+        <br>
+          <h3 class="text-center" style="color: white;">Register</h3>
           <br>
           <form method="POST" action="{% url 'register' %}">
             {% csrf_token %}
@@ -56,7 +60,7 @@
       <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
     </div>
   <fieldset>
-    {{ form.as_p }}
+    <br>
     <center><button type="submit" class="btn btn-primary">Register</button></center>
     <br><br>
   </fieldset>

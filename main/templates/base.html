@@ -36,7 +36,7 @@ position: relative;
 </head>
 <body style="font-family: 'Comfortaa', cursive;">
 
-<nav class="navbar navbar-expand-lg" style="background-color:white;">
+<nav class="navbar navbar-expand-lg" style="background-color:#EDF5E1;color: white;">
   <a class="navbar-brand" href="/" style="font-family: felipa;font-weight: bold;font-size: 25px;">RenPortal</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -51,6 +51,9 @@ position: relative;
       <li class="nav-item">
         <a class="nav-link" href="{% url 'approve_students' %}">All Students</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'send_notification' %}">Send Notifications</a>
+      </li>
       {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'user_dashboard' %}">All Events</a>
@@ -62,7 +65,7 @@ position: relative;
     </ul>
     {% if user.is_authenticated %}
     <div class="form-inline my-2 my-lg-0">
-      <a href="/accounts/logout" class="btn btn-danger my-2 my-sm-0">Logout</a>
+      <a href="/accounts/logout" class="account-btn btn btn-danger my-2 my-sm-0">Logout</a>
     </div>
     {% else %}
     <div class="form-inline my-2 my-lg-0">
@@ -75,7 +78,7 @@ position: relative;
 {%  block content %}{% endblock %}
 
 <br><br>
-<div class="list-group">
+<div class="list-group" style="padding-top: 100px;">
   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">List group item heading</h5>

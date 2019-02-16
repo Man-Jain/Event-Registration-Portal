@@ -3,30 +3,21 @@
 {% block content %}
 
 <style type="text/css">
-  body {
-    background-image: none !important;
-  }
 </style>
 
-<div class="jumbotron">
-  <h1 class="text-center display-4">Our Events</h1>
-  <br>
-  <p class="lead">Here is a list of events of Renaissance.</p>
-  <hr class="my-4">
-</div>
-<br>
-
-<div class="container">
+<div style="margin-top: 2%;" class="container">
+  <h1 style="color: white;" class="text-center display-4">Our Events</h1>
+  <br><br>
 	<div class="row">
 		{% for event in events %}
       <div class="col-md-4">
-      <div class="card mb-3">
+      <div style="max-height: 500px;" class="card mb-3 text-white bg-dark">
   <h3 class="card-header">{{ event.name }}</h3>
   <div class="card-body">
     <h6 class="card-subtitl e text-muted">Support card subtitle</h6>
   </div>
-  <img style="height: 200px; width: 100%; display: block;" src="{{ event.image.url }}" alt="Card image">
-  <div class="card-body">
+  <center><img style="height: 200px; width: 60%; display: block;" src="{{ event.image.url }}" alt="Card image"></center>
+  <div style="overflow: scroll;"  class="card-body">
     <p class="card-text">{{ event.desc }}</p>
   </div>
   <div class="card-body">
@@ -34,8 +25,7 @@
       {% if user_event.items.event.name == 'N' %}
         <a href="#" class="btn btn-warning card-link disabled">Waiting For Approval</a>
       {% else %}
-        <a href="#" class="btn btn-info card-link disabled">Already Participated</a>
-      {% endif %}
+        <button type="button" data-toggle="tooltip" data-placement="left" title="" data-original-title="Pay Fee For Approval" href="#" class="btn btn-info card-link disabled">Already Participated</button>      {% endif %}
     {% else %}
     <a href="{% url 'register_event' event.id %}" class="btn btn-success card-link">Participate Now</a>
     {% endif %}
