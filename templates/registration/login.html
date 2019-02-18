@@ -10,13 +10,14 @@
   }
 </style>
 <div class="row">
-  <a href="/"><img src="http://jecrcrenaissance.in/img/renaisss.png" style="position: absolute;left: 550px;" height="125px;"></a>
+  <!--<center><div class="col-md-4"><img src="http://jecrcrenaissance.in/img/renaisss.png" style=""></div></center>-->
 </div>
  <div style="margin-top:10%;" class="row">
   <div class="col-md-4">
-    <img style="bottom:0;" src="{% static 'img/smedia.png' %}">
+    <center><img src="{% static 'img/smedia.png' %}"></center>
   </div>
-      <div class="col-md-4" style="background-color:white; padding:5%;">
+      <div class="col-md-4" style="background-color:white; padding:5%; padding-top:1%;">
+        <center><a href="/"><img src="http://jecrcrenaissance.in/img/renaisss.png" style="width:50%;"></a></center>
           <h3 class="text-center">LOGIN</h3>
           <br>
           <form style="width:100%;" method="POST" action="{% url 'login' %}">
@@ -29,7 +30,7 @@
 </form>
       </div>
       <div class="col-md-4">
-    <img style="float:right;bottom:0;" src="{% static 'img/teamss.png' %}">
+    <center><img src="{% static 'img/teamss.png' %}"></center>
   </div>
   </div>
 {% endblock %}

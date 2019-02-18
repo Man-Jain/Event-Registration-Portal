@@ -17,10 +17,16 @@ position: relative;
 	}
 </style>
   <div style="min-height:600px;">
-  	<div>
-  <img src="http://jecrcrenaissance.in/img/jecrc.png" width="150px;">
-  <img src="http://jecrcrenaissance.in/img/renaisss.png" style="position: absolute;left: 375px;" width="600px" height="350px;">
-  <img src="{% static 'cir1.jpg' %}" style="position: absolute;top: 800px;">
+  	<div class="row">
+      <div class="col-md-4">
+        <img src="http://jecrcrenaissance.in/img/jecrc.png" width="150px;">
+      </div>
+      <div class="col-md-4">
+  <img src="http://jecrcrenaissance.in/img/renaisss.png" style="width:100%;">
+      </div>
+      <div class="col-md-4">
+  <img src="{% static 'cir1.jpg' %}">
+      </div>
 </div>
   </div>
   <div class="card-body">

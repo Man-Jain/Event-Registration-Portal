@@ -22,7 +22,7 @@
         </tr>
     {% for student in event_students %}
         <tr>
-          <td>1</td>
+          <td>{{ forloop.counter }}</td>
           <td>{{ student.id }}</td>
           <td>{{ student.user.user.first_name }}</td>
           <td>{{ student.user.branch }}</td>
@@ -31,11 +31,16 @@
           <td>{{ student.user.mobile_number }}</td>
           <td>{{ student.event.price }}</td>
           <td>{{ student.payment_status }}</td>
+          <td>{{ student.team.members }}</td>
           {% if student.payment_status == "Y" %}
-          <td><a href="#" class="btn btn-info card-link disabled">Approved</a></td>
+          <td><a href="#" class="btn-sm btn btn-info card-link disabled">Approved</a></td>
           {% else %}
-          <td><a href="{% url 'approve_student' student.id %}" class="btn btn-success card-link">Approve</a></td>
+          <td><a href="{% url 'approve_student' student.id %}" class="btn btn-success btn-sm card-link">Approve</a>
+          </td>
           {% endif %}
+          <td>{% if request.user.coordinator.associated_event.toi == 'team' %}
+          <a href="#" class="btn btn-success btn-sm card-link">Team Detials</a>
+          {% endif %}</td>
         </tr>
     {% endfor %}
       </table>

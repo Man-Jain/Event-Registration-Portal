@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, ListView, DetailView
+from django.views import View
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from main.models import *
@@ -80,6 +81,27 @@ class ParticipatedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 	def test_func(self):
 		return self.request.user.groups.filter(name='coordinator').exists()
 
+class TeamDetails(TemplateView):
+	template_name = 'team_register.html'
+
+	def post(self, request, **kwargs):
+		data = request.POST
+		data = dict(data)
+		del data['csrfmiddlewaretoken']
+		event = Event.objects.get(pk=kwargs['event_id'])
+		e = ParticipatedEvent(user=request.user.participant, event=event, payment_status='N')
+		e.save()
+		team = Team(participation_id=e,event=event,team_leader=request.user.participant,members=data)
+		team.save()
+		return redirect('get_receipt', participation_id=e.pk)
+	
+	def get_context_data(self, **kwargs):
+	    context = super().get_context_data(**kwargs)
+	    event = Event.objects.get(pk=kwargs['event_id'])
+	    context['event_team_size'] = range(event.team_size)
+	    context['event_id'] = kwargs['event_id']
+	    return context
+
 class ApprovedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 	'''List of Students Approved in Events'''
 	model = ParticipatedEvent
@@ -90,7 +112,10 @@ class ApprovedStudentsView(LoginRequiredMixin,UserPassesTestMixin,ListView):
 		return self.request.user.groups.filter(name='coordinator').exists()
 
 	def get_queryset(self):
-		return ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event)
+		if self.kwargs['payment_status'] in ['Y','N']:
+			return ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event,payment_status=self.kwargs['payment_status'])
+		else:
+			return ParticipatedEvent.objects.filter(event=self.request.user.coordinator.associated_event)
 
 	def get_context_data(self, **kwargs):
 	    context = super().get_context_data(**kwargs)
@@ -137,7 +162,6 @@ class Register(TemplateView):
 @login_required
 def register_event(request, event_id):
 	event = Event.objects.get(pk=event_id)
-	print(event.name)
 	e = ParticipatedEvent(user=request.user.participant, event=event, payment_status='N')
 	e.save()
 	return redirect('get_receipt', participation_id=e.pk)

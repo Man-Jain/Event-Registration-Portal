@@ -1,40 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
-<style type="text/css">.navbar .nav-link {
+<style type="text/css">
+.navbar .nav-link {
     display: none;
-  }</style>
- <center><div class="container">
-      <div class="col-md-6">
+  }
+.field-team {
+  margin: 1%;
+}
+</style>
+
+ <center><div class="container" style="width:90%;">
+      <div class="col-md-12">
         <br>
-          <h3 class="text-center" style="color: white;">Register</h3>
+          <h3 class="text-center" style="color: white;">Enter Team Details</h3>
           <br>
-          <form method="POST" action="{% url 'register' %}">
-            {% csrf_token %}
-    <div class="form-group">
-      <label for="exampleInputEmail1">Username</label>
-      <input type="text" name="username" class="form-control" placeholder="Enter Username">
-    </div>
-    <div class="form-group">
+          <form method="POST" action="{% url 'register_team' event_id %}">
+             {% csrf_token %}
+           {% for a in event_team_size %}
+          <h5 style="color:white;">Member {{forloop.counter}}</h5>
+            <div class="row">
+              <br>
+    <div class="col-md-3 field-team">
       <label for="exampleInputEmail1">Name</label>
       <input type="text" name="name" class="form-control" placeholder="Enter Name">
     </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
+    <div class="col-md-4 field-team">
+      <label for="exampleInputEmail1">Email</label>
       <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
     </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Mobile Number</label>
+    <div class="col-md-3 field-team">
+      <label for="exampleInputEmail1">Mobile</label>
       <input type="text" name="number" class="form-control" placeholder="Mobile Number">
     </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">College Name</label>
+    <div class="col-md-4 field-team">
+      <label for="exampleInputEmail1">College</label>
       <input type="text" name="college" class="form-control" placeholder="College Name">
     </div>
-    <div class="form-group">
+    <div class="col-md-3 field-team">
       <label for="exampleInputEmail1">Roll No.</label>
       <input type="text" name="roll_no" class="form-control" placeholder="College Name">
     </div>
-        <div class="form-group">
+        <div class="col-md-3 field-team">
       <label for="exampleSelect1">Year</label>
       <select class="form-control" id="exampleSelect1" name="year">
         <option value="1">1st Year</option>
@@ -43,7 +49,7 @@
         <option value="4">4th Year</option>
       </select>
     </div>
-        <div class="form-group">
+        <div class="col-md-3 field-team">
       <label for="exampleSelect1">Branch</label>
       <select class="form-control" id="exampleSelect1" name="branch">
         <option value="Civil">Civil</option>
@@ -55,16 +61,15 @@
         <option value="Others">Others</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-  <fieldset>
     <br>
-    <center><button type="submit" class="btn btn-primary">Register</button></center>
     <br><br>
-  </fieldset>
+  </div>
+  <br>
+           {% endfor %}
+      <center><button type="submit" class="btn btn-primary">Register</button></center>
+
 </form>
       </div>
-  </div></center>
+  </div>
+</center>
 {% endblock %}

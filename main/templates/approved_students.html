@@ -10,7 +10,16 @@
   <br>
   <h1 class="text-center display-4">Participating Students</h1>
 <br>
-
+<ul class="nav nav-pills" style="float: right;">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Filter Results</a>
+    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+      <a class="dropdown-item" href="{% url 'approve_students' 'A' %}">All Students</a>
+      <a class="dropdown-item" href="{% url 'approve_students' 'Y' %}">Approved Students</a>
+      <a class="dropdown-item" href="{% url 'approve_students' 'N' %}">Unapproved Studens</a>
+    </div>
+  </li>
+</ul>
 <table class="table table-hover">
         <tr>
           <th>S No.</th>
@@ -25,7 +34,7 @@
         </tr>
     {% for student in approved_students %}
         <tr>
-          <td>1</td>
+          <td>{{ forloop.counter }}</td>
           <td>{{ student.id }}</td>
           <td>{{ student.user.user.first_name }}</td>
           <td>{{ student.user.branch }}</td>

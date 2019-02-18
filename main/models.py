@@ -7,6 +7,7 @@ class Event(models.Model):
 	name = models.CharField(max_length=128, blank=False)
 	price = models.FloatField(blank=False)
 	toi = models.CharField(choices=(('team','Team Event'),('single','Individual Event')),max_length=128)
+	team_size = models.IntegerField(blank=True)
 	image = models.ImageField(upload_to='img')
 	desc = models.TextField()
 
@@ -51,3 +52,12 @@ class Notification(models.Model):
 
 	def __str__(self):
 		return self.event.name
+
+class Team(models.Model):
+	participation_id = models.OneToOneField(ParticipatedEvent, on_delete=models.CASCADE)
+	team_leader = models.ForeignKey(Participant, on_delete=models.CASCADE)
+	event = models.ForeignKey(Event, on_delete=models.CASCADE)
+	members = models.TextField()
+
+	def __str__(self):
+		return self.team_leader.user.first_name

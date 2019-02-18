@@ -11,6 +11,7 @@ urlpatterns = [
 	path('event_details', ParticipatedStudentsView.as_view(), name='event_details'),
 	path('get_receipt/<int:participation_id>', get_receipt_participation, name='get_receipt'),
 	path('register', Register.as_view(), name='register'),
-	path('approve_students', ApprovedStudentsView.as_view(), name='approve_students'),
+	path('approve_students/<payment_status>', ApprovedStudentsView.as_view(), name='approve_students'),
 	path('send_notification', SendNotification.as_view(), name='send_notification'),
+	path('register_team/<int:event_id>/',TeamDetails.as_view(),name='register_team'),
 ]

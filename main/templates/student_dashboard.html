@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<style type="text/css">
-</style>
-
 <div style="margin-top: 2%;" class="container">
   <h1 style="color: white;" class="text-center display-4">Our Events</h1>
   <br><br>
@@ -27,7 +23,12 @@
       {% else %}
         <button type="button" data-toggle="tooltip" data-placement="left" title="" data-original-title="Pay Fee For Approval" href="#" class="btn btn-info card-link disabled">Already Participated</button>      {% endif %}
     {% else %}
+    {% if event.toi == 'single' %}
     <a href="{% url 'register_event' event.id %}" class="btn btn-success card-link">Participate Now</a>
+    {% else %}
+<!-- Button to Open the Modal -->
+<a href="{% url 'register_team' event.id %}" class="btn btn-success card-link">Participate Now</a>
+   {% endif %}
     {% endif %}
   </div>
 </div>
@@ -35,5 +36,4 @@
     {% endfor %}
 	</div>
 </div>
-
 {% endblock %}
