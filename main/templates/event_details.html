@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load app_filters %}
 {% block content %}
 <style type="text/css">
   body {
@@ -18,6 +19,7 @@
           <th>Contact Number</th>
           <th>Fee</th>
           <th>Payment Status</th>
+          <th>Team Details</th>
           <th>Action</th>
         </tr>
     {% for student in event_students %}
@@ -31,16 +33,43 @@
           <td>{{ student.user.mobile_number }}</td>
           <td>{{ student.event.price }}</td>
           <td>{{ student.payment_status }}</td>
-          <td>{{ student.team.members }}</td>
+          <td>{% if request.user.coordinator.associated_event.toi == 'team' %}
+          <button type="button" class="btn btn-danger btn-sm " data-toggle="modal" data-target="#myModal{{ forloop.counter }}" data-dismiss="modal">Team Detials</button>
+<div class="container" style="">
+  <!-- Trigger the modal with a button -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal{{ forloop.counter }}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Team Details</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div style="color:black;" class="modal-body">
+          {% for value in 5|range:10 %}
+            {{ value }}
+          {% endfor %}
+          {{ student.team.members }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+          {% endif %}</td>
           {% if student.payment_status == "Y" %}
           <td><a href="#" class="btn-sm btn btn-info card-link disabled">Approved</a></td>
           {% else %}
           <td><a href="{% url 'approve_student' student.id %}" class="btn btn-success btn-sm card-link">Approve</a>
           </td>
           {% endif %}
-          <td>{% if request.user.coordinator.associated_event.toi == 'team' %}
-          <a href="#" class="btn btn-success btn-sm card-link">Team Detials</a>
-          {% endif %}</td>
         </tr>
     {% endfor %}
       </table>

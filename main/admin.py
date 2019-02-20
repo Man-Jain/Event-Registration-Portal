@@ -27,13 +27,14 @@ class DisplayEvent(admin.ModelAdmin):
 		elements.append(table_data)
 		doc.build(elements)
 		return response
+
 	list_display = ('id','name','price')
 	search_fields = ['name', 'price']
 	list_filter = ('name', 'price')
 	actions = [export_audits_as_pdf]
 
 class DisplayParticipatedEvent(admin.ModelAdmin):
-	list_display = ('user','event','payment_status')
+	list_display = ('user','event','payment_status',)
 	search_fields = ['user', 'event']
 	list_filter = ('user', 'event','payment_status')
 

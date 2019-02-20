@@ -21,6 +21,12 @@ class DashboardIndex(LoginRequiredMixin, ListView):
 		else:
 			return None
 
+	def dispatch(self, request, *args, **kwargs):
+		queryset = self.get_queryset()
+		if not queryset:
+			return redirect('user_dashboard')
+		return super().dispatch(request, *args, **kwargs)
+
 class EventListView(LoginRequiredMixin, ListView):
 	'''List of All Events'''
 	model = Event
