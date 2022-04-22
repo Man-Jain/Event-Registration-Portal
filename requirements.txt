@@ -1,6 +1,6 @@
 click==6.7
 dj-database-url==0.5.0
-Django==2.2.13
+Django==2.2.28
 Flask==1.0.2
 gcloud==0.17.0
 googleapis-common-protos==1.5.3
